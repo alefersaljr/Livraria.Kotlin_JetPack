@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Library_Kotlin</string>
+    <string name="action_settings">Settings</string>
+    <string name="word_label">Word</string>
+    <string name="hint_word">Word...</string>
+    <string name="meaning_label">Meaning</string>
+    <string name="hint_meaning">Meaning..</string>
+    <string name="btn_delete_label">DELETE</string>
+    <string name="btn_save_label">SAVE</string>
+    <string name="empty_word_not_saved">Empty word not saved</string>
+    <string name="word_deleted">Word Deleted</string>
+    <string name="action_clear_list">Clear List</string>
+    <string name="confirmacao_excluir_lista">Tem certeza que quer excluir toda a lista?</string>
+    <string name="toast_lista_excluida">Lista excluida</string>
+    <string name="dialog_sim">SIM</string>
+    <string name="dialog_nao">NÃO</string>
+    <string name="numero_de_registros">Número de Registros:</string>
+</resources>
