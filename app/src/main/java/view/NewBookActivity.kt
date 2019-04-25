@@ -10,37 +10,37 @@ import android.widget.EditText
 import br.com.alexandre_salgueirinho.library_kotlin.R
 import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 
-class NewWordActivity : AppCompatActivity() {
+class NewBookActivity : AppCompatActivity() {
 
-    private lateinit var mWordEditText: EditText
-    private lateinit var mMeaningEditText: EditText
+    private lateinit var mBookEditText: EditText
+    private lateinit var mGeneroEditText: EditText
     private lateinit var mSaveBtn: Button
     private lateinit var mDeleteBtn: Button
 
-    private lateinit var mWord: String
-    private lateinit var mMeaning: String
-    private var isNewWord : Boolean = true
+    private lateinit var mBook: String
+    private lateinit var mGenero: String
+    private var isNewBook : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_word)
 
-        mWordEditText = findViewById(R.id.word_text)
-        mMeaningEditText = findViewById(R.id.meaning_text)
+        mBookEditText = findViewById(R.id.word_text)
+        mGeneroEditText = findViewById(R.id.meaning_text)
         mSaveBtn = findViewById(R.id.btn_save)
         mDeleteBtn = findViewById(R.id.btn_delete)
 
         var extras = intent.extras
         extras?.let {
-            mWord = extras.get(EXTRA_KEY_WORD) as String
-            mMeaning = extras.get(EXTRA_KEY_MEANING) as String
-            mWordEditText.setText(mWord)
-            mMeaningEditText.setText(mMeaning)
-            mWordEditText.isEnabled = false
-            isNewWord = false
+            mBook = extras.get(EXTRA_KEY_BOOK) as String
+            mGenero = extras.get(EXTRA_KEY_GENERO) as String
+            mBookEditText.setText(mBook)
+            mGeneroEditText.setText(mGenero)
+            mBookEditText.isEnabled = false
+            isNewBook = false
         }
 
-        if(isNewWord){
+        if(isNewBook){
             mDeleteBtn.visibility = View.GONE
         }else{
             mDeleteBtn.visibility = View.VISIBLE
@@ -48,18 +48,18 @@ class NewWordActivity : AppCompatActivity() {
 
         mSaveBtn.setOnClickListener {
             val intent = Intent()
-            if(TextUtils.isEmpty(mWordEditText.text) || TextUtils.isEmpty(mMeaningEditText.text)){
+            if(TextUtils.isEmpty(mBookEditText.text) || TextUtils.isEmpty(mGeneroEditText.text)){
                 setResult(RESULT_ERROR, intent)
             }else {
-                intent.putExtra(EXTRA_KEY_WORD, mWordEditText.text.toString())
-                intent.putExtra(EXTRA_KEY_MEANING, mMeaningEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_BOOK, mBookEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
                 setResult(RESULT_SAVE, intent)
             }
             finish()
         }
 
         mDeleteBtn.setOnClickListener {
-            intent.putExtra(EXTRA_KEY_WORD, mWordEditText.text.toString())
+            intent.putExtra(EXTRA_KEY_BOOK, mBookEditText.text.toString())
             setResult(RESULT_DELETE, intent)
             finish()
         }
