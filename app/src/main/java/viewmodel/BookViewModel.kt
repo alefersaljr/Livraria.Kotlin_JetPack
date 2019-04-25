@@ -9,12 +9,10 @@ import model.BookRepository
 class BookViewModel(application: Application): AndroidViewModel(application) {
     private val bookRepository:BookRepository
     private val allBooks: LiveData<List<Book>>
-//    private val numberRegisters: LiveData<Int>?
 
     init {
         bookRepository = BookRepository(application)
         allBooks = bookRepository.getAllBooks()
-//        numberRegisters = bookRepository.getNumberRegisters()
     }
 
     fun insertBook(book: Book){
@@ -31,11 +29,15 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
 
     fun getAllBooks() = allBooks
 
-    fun getBookByName(name: String): Book? {
-        return bookRepository.getBookByName(name)
+//    fun getBookById(name: String): Book? {
+//        return bookRepository.getBookById(name)
+//    }
+
+    fun getBookById(id: Int): Book? {
+        return bookRepository.getBookById(id)
     }
 
-//    fun getNumberRegisters(): LiveData<Int>? {
-//        return bookRepository.getNumberRegisters()
-//    }
+    fun getNumOfBooks(): LiveData<Int>? {
+        return bookRepository.getNumOfBooks()
+    }
 }

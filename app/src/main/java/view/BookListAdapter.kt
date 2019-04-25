@@ -35,13 +35,18 @@ class BookListAdapter(private val mContext: Context, private var mItemClickListe
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         var currentBook = mBooks[position]
         holder.bookTextView.text = currentBook.name
+        holder.bookAutorTextView.text = currentBook.autor
 
         holder.bookTextView.setOnClickListener {
             mItemClickListener.onItemClick(holder.bookTextView, position)
+        }
+        holder.bookAutorTextView.setOnClickListener {
+            mItemClickListener.onItemClick(holder.bookAutorTextView, position)
         }
     }
 
     class BookViewHolder (itemView: View): RecyclerView.ViewHolder (itemView){
         var bookTextView: TextView = itemView.findViewById(R.id.textView)
+        var bookAutorTextView: TextView = itemView.findViewById(R.id.textViewAutor)
     }
 }

@@ -8,13 +8,13 @@ class BookRepository (application: Application) {
     private val bookDao:BookDao?
     private val allBooks: LiveData<List<Book>>?
 
-//    private val numberRegisters: LiveData<Int>?
+    private val numberRegisters: LiveData<Int>?
 
     init {
         val db = BookRoomDatabase.getInstance(application)
-        bookDao = db?.bookDao()
-        allBooks = bookDao?.getAllBooks()
-//        numberRegisters = bookDao?.getNumberRegisters()
+        bookDao = db.bookDao()
+        allBooks = bookDao.getAllBooks()
+        numberRegisters = bookDao.getNumOfBooks()
     }
 
     fun insertBook(book: Book){
@@ -33,15 +33,26 @@ class BookRepository (application: Application) {
         return allBooks!!
     }
 
-//    fun getNumberRegisters(): LiveData<Int>? {
-//        return numberRegisters
+    fun getNumOfBooks(): LiveData<Int>? {
+        return numberRegisters
+    }
+
+//    fun getBookById(name: String): Book? {
+//        val allBookList = allBooks?.value?.toList()
+//
+//        allBookList?.iterator()?.forEach {
+//            if (it.name == name){
+//                return it
+//            }
+//        }
+//        return null
 //    }
 
-    fun getBookByName(name: String): Book? {
+    fun getBookById(id: Int): Book? {
         val allBookList = allBooks?.value?.toList()
 
         allBookList?.iterator()?.forEach {
-            if (it.name == name){
+            if (it.id == id){
                 return it
             }
         }

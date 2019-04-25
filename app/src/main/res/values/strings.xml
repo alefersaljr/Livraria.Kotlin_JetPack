@@ -15,4 +15,13 @@
     <string name="dialog_sim">SIM</string>
     <string name="dialog_nao">NÃO</string>
     <string name="numero_de_livros">Total de Livros:</string>
+    <string name="autor_label">Autor</string>
+    <string name="hint_autor">Autor..</string>
+    <string name="hint_preco">Preço..</string>
+    <string name="preco_label">Preço</string>
+    <string name="livro_numero_label">Livro Número:</string>
+    <string name="obrigatorio_nome_livro">É necessário informar o nome do livro</string>
+    <string name="obrigatorio_autor">É necessário informar o autor</string>
+    <string name="obrigatorio_genero">É necessário informar um genero</string>
+    <string name="obrigatorio_preco">Obrigatório informar um preço</string>
 </resources>

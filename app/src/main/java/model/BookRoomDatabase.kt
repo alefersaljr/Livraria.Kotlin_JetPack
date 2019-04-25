@@ -11,17 +11,20 @@ abstract class BookRoomDatabase : RoomDatabase() {
 
     companion object{
         @Volatile
-        var database: BookRoomDatabase? = null
+        var dbInstance: BookRoomDatabase? = null
 
-        fun getInstance(context: Context): BookRoomDatabase? {
-            if(database == null){
-                synchronized(BookRoomDatabase::class.java){
-                    if (database == null) {
-                        database = Room.databaseBuilder(context.applicationContext, BookRoomDatabase::class.java, "book_database").build()
-                    }
-                }
+        var dbName = "db_books"
+
+        fun getInstance(context: Context): BookRoomDatabase {
+            val tempInstance = dbInstance
+            if(tempInstance != null){
+                return tempInstance
             }
-            return database
+            synchronized(this){
+                val instance = Room.databaseBuilder(context.applicationContext, BookRoomDatabase::class.java, dbName).build()
+                dbInstance = instance
+                return instance
+            }
         }
     }
 }
