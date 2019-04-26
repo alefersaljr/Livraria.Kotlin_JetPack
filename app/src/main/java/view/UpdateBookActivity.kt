@@ -25,7 +25,6 @@ class UpdateBookActivity : AppCompatActivity() {
     private lateinit var mGenero: String
     private lateinit var mAutor: String
     private lateinit var mPreco: String
-    private var isNewBook: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,6 @@ class UpdateBookActivity : AppCompatActivity() {
             mGeneroEditText.setText(mGenero)
             mAutorEditText.setText(mAutor)
             mPrecoEditText.setText(mPreco)
-            isNewBook = false
         }
 
         mDeleteBtn.visibility = View.VISIBLE
@@ -86,7 +84,7 @@ class UpdateBookActivity : AppCompatActivity() {
             builder.setMessage(getString(R.string.exclude_book))
 
             builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
-                intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_BOOK_NAME, mId)
                 setResult(RESULT_DELETE, intent)
                 finish()
             }

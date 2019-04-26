@@ -29,10 +29,6 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
 
     fun getAllBooks() = allBooks
 
-//    fun getBookById(name: String): Book? {
-//        return bookRepository.getBookById(name)
-//    }
-
     fun getBookById(id: String): Book? {
         return bookRepository.getBookById(id)
     }

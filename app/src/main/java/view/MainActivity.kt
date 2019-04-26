@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-//import android.widget.TextView
+import android.widget.TextView
 import android.widget.Toast
 import br.com.alexandre_salgueirinho.library_kotlin.R
 import br.com.alexandre_salgueirinho.library_kotlin.utils.*
@@ -19,6 +19,7 @@ import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import model.Book
 import viewmodel.BookViewModel
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
@@ -36,15 +37,16 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
     private lateinit var mAdapter: BookListAdapter
     private var mBooks: List<Book> = mutableListOf<Book>()
     private lateinit var mBookViewModel: BookViewModel
-//    private lateinit var mNumber: BookViewModel
-//    private lateinit var mNumberRegisters: TextView
-
+    private lateinit var mTempo: TextView
+    private lateinit var mNumberRegisters: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        mTempo = findViewById(R.id.tempo_execucao_txt)
+        mNumberRegisters = findViewById(R.id.total_txt)
         mRecyclerView = findViewById(R.id.recyclerView)
         mAdapter = BookListAdapter(this, this)
         mAdapter.setBooks(mBooks)
@@ -55,23 +57,22 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
         mBookViewModel.getAllBooks().observe(this, Observer { books ->
             books?.let {
+                val timingIni = System.nanoTime()
                 mAdapter.setBooks(it)
+                mNumberRegisters.text = mAdapter.itemCount.toString()
+//                Thread(Runnable {
+//                    this@MainActivity.runOnUiThread(java.lang.Runnable {
+//                        this.mNumberRegisters.text = mAdapter.itemCount.toString()
+////                            Thread.sleep(5000)
+//                    })
+//                }).start()
+                
+                var timeEnd = System.nanoTime()
+                var temp = String.format("%.2f", ((timeEnd.toDouble() - timingIni.toDouble()) / 1000000))
+                mTempo.text = temp
             }
         })
 
-//        mNumberRegisters = findViewById(R.id.number_content)
-//        var mNumber = Room.databaseBuilder(applicationContext, BookRoomDatabase :: class.java, "db_books").build()
-
-//        var a = mNumber.bookDao().getNumOfBooks()
-//        mNumber = ViewModelProviders.of(this).get(BookViewModel::class.java)
-//        mNumberRegisters.text = mNumber.getNumOfBooks().toString()
-//        mNumberRegisters.text = a.toString()
-
-
-        add_icon.setOnClickListener {
-            val intent = Intent(this, NewBookActivity::class.java)
-            startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
             }
         } else if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
             data?.let {
-//                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
+                //                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
                 val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID))
                 book?.let {
                     mBookViewModel.deleteBook(book)
@@ -111,6 +112,11 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
         return when (item.itemId) {
             R.id.action_clear_list -> {
                 clearListAction()
+                return true
+            }
+            R.id.action_add_book -> {
+                val intent = Intent(this, NewBookActivity::class.java)
+                startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

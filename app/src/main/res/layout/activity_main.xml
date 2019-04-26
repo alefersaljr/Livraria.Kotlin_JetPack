@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -32,13 +32,41 @@
                 layout="@layout/content_main"
                 android:id="@+id/include"/>
 
-        <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add_icon"
+        <LinearLayout
+                android:id="@+id/execucao_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/icon_add"/>
+                android:layout_below="@+id/include"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_gravity="top|start"
+                android:paddingLeft="10sp"
+                android:paddingTop="60sp">
+
+            <TextView
+                    android:id="@+id/tempo_execucao_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5sp"
+                    android:text="Tempo de Execução: "/>
+
+            <TextView
+                    android:id="@+id/tempo_execucao_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5sp"
+                    android:paddingLeft="2sp"
+                    android:text="0"/>
+
+            <TextView
+                    android:id="@+id/tempo_execucao_ms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5sp"
+                    android:paddingLeft="2sp"
+                    android:text="ms"/>
+
+        </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/total_layout"

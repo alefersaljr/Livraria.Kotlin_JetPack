@@ -33,21 +33,6 @@ class BookRepository (application: Application) {
         return allBooks!!
     }
 
-//    fun getNumOfBooks(): LiveData<Int>? {
-//        return numberRegisters
-//    }
-
-//    fun getBookById(name: String): Book? {
-//        val allBookList = allBooks?.value?.toList()
-//
-//        allBookList?.iterator()?.forEach {
-//            if (it.name == name){
-//                return it
-//            }
-//        }
-//        return null
-//    }
-
     fun getBookById(id: String): Book? {
         val allBookList = allBooks?.value?.toList()
 
