@@ -2,7 +2,6 @@ package view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 //import android.widget.TextView
 import android.widget.Toast
 import br.com.alexandre_salgueirinho.library_kotlin.R
@@ -20,17 +18,12 @@ import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 import model.Book
-import model.BookRoomDatabase
 import viewmodel.BookViewModel
-import java.text.DateFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
     override fun onItemClick(view: View, position: Int) {
-        val intent = Intent(this, NewBookActivity::class.java)
+        val intent = Intent(this, UpdateBookActivity::class.java)
 //        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
         intent.putExtra(EXTRA_KEY_BOOK_NAME, mAdapter.getBooks()[position].name)
         intent.putExtra(EXTRA_KEY_GENERO, mAdapter.getBooks()[position].genero)
@@ -75,7 +68,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 //        mNumberRegisters.text = a.toString()
 
 
-        fab.setOnClickListener {
+        add_icon.setOnClickListener {
             val intent = Intent(this, NewBookActivity::class.java)
             startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE)
         }
@@ -102,7 +95,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
                 book?.let {
                     mBookViewModel.deleteBook(book)
                 }
-                Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.book_deleted_label), Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_ERROR) {
             Toast.makeText(this, getString(R.string.empty_book_not_saved), Toast.LENGTH_SHORT).show()
@@ -131,7 +124,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
         builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
             mBookViewModel.delereAllBooks()
-            Toast.makeText(this, getString(R.string.toast_lista_excluida), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_livros_excluidos), Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton(getString(R.string.dialog_nao)) { dialog, _ ->

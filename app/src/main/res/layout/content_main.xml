@@ -15,11 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryLight"
-            android:paddingTop="12sp"
+            android:paddingTop="@dimen/paddin_top_recycler_view"
+            android:layout_marginTop="@dimen/margin_top_recycler_view"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
