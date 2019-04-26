@@ -29,15 +29,15 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
 
     fun getAllBooks() = allBooks
 
-//    fun getBookById(name: String): Book? {
-//        return bookRepository.getBookById(name)
+    fun getBookById(name: String): Book? {
+        return bookRepository.getBookById(name)
+    }
+
+//    fun getBookById(id: Int): Book? {
+//        return bookRepository.getBookById(id)
 //    }
 
-    fun getBookById(id: Int): Book? {
-        return bookRepository.getBookById(id)
-    }
-
-    fun getNumOfBooks(): LiveData<Int>? {
-        return bookRepository.getNumOfBooks()
-    }
+//    fun getNumOfBooks(): LiveData<Int>? {
+//        return bookRepository.getNumOfBooks()
+//    }
 }

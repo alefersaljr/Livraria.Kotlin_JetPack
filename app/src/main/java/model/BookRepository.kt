@@ -8,13 +8,13 @@ class BookRepository (application: Application) {
     private val bookDao:BookDao?
     private val allBooks: LiveData<List<Book>>?
 
-    private val numberRegisters: LiveData<Int>?
+//    private val numberRegisters: LiveData<Int>?
 
     init {
         val db = BookRoomDatabase.getInstance(application)
         bookDao = db.bookDao()
         allBooks = bookDao.getAllBooks()
-        numberRegisters = bookDao.getNumOfBooks()
+//        numberRegisters = bookDao.getNumOfBooks()
     }
 
     fun insertBook(book: Book){
@@ -33,31 +33,31 @@ class BookRepository (application: Application) {
         return allBooks!!
     }
 
-    fun getNumOfBooks(): LiveData<Int>? {
-        return numberRegisters
-    }
-
-//    fun getBookById(name: String): Book? {
-//        val allBookList = allBooks?.value?.toList()
-//
-//        allBookList?.iterator()?.forEach {
-//            if (it.name == name){
-//                return it
-//            }
-//        }
-//        return null
+//    fun getNumOfBooks(): LiveData<Int>? {
+//        return numberRegisters
 //    }
 
-    fun getBookById(id: Int): Book? {
+    fun getBookById(name: String): Book? {
         val allBookList = allBooks?.value?.toList()
 
         allBookList?.iterator()?.forEach {
-            if (it.id == id){
+            if (it.name == name){
                 return it
             }
         }
         return null
     }
+
+//    fun getBookById(id: Int): Book? {
+//        val allBookList = allBooks?.value?.toList()
+//
+//        allBookList?.iterator()?.forEach {
+//            if (it.id == id){
+//                return it
+//            }
+//        }
+//        return null
+//    }
 
     private class InsertAsyncTask(private val dao: BookDao) :AsyncTask<Book, Void, Void>() {
         override fun doInBackground(vararg params: Book): Void? {

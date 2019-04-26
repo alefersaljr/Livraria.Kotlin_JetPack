@@ -39,11 +39,6 @@ class NewBookActivity : AppCompatActivity() {
         mSaveBtn = findViewById(R.id.btn_save)
         mDeleteBtn = findViewById(R.id.btn_delete)
 
-        if (isNewBook) {
-            mDeleteBtn.visibility = View.GONE
-        } else {
-            mDeleteBtn.visibility = View.VISIBLE
-        }
 
         val extras = intent.extras
         extras?.let {
@@ -58,6 +53,11 @@ class NewBookActivity : AppCompatActivity() {
             isNewBook = false
         }
 
+        if (isNewBook) {
+            mDeleteBtn.visibility = View.GONE
+        } else {
+            mDeleteBtn.visibility = View.VISIBLE
+        }
 
         mSaveBtn.setOnClickListener {
             val intent = Intent()
@@ -76,13 +76,13 @@ class NewBookActivity : AppCompatActivity() {
             }
 //                setResult(RESULT_ERROR, intent)
             else {
-                if (isNewBook) {
-                    var current = (Calendar.getInstance()).getTime()
-                    var format = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                    var date = format.format(current)
-                    date = date.replace(":", "").replace("/", "").replace(" ", "")
-                    intent.putExtra(EXTRA_KEY_ID, date.toInt())
-                }
+//                if (isNewBook) {
+//                    var current = (Calendar.getInstance()).getTime()
+//                    var format = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+//                    var date = format.format(current)
+//                    date = date.replace(":", "").replace("/", "").replace(" ", "")
+//                    intent.putExtra(EXTRA_KEY_ID, date.toInt())
+//                }
                 intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
                 intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
                 intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())

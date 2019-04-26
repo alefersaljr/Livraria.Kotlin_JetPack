@@ -13,7 +13,7 @@ abstract class BookRoomDatabase : RoomDatabase() {
         @Volatile
         var dbInstance: BookRoomDatabase? = null
 
-        var dbName = "db_books"
+        var dbName = "db_bookss"
 
         fun getInstance(context: Context): BookRoomDatabase {
             val tempInstance = dbInstance

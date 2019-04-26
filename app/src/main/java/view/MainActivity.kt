@@ -2,6 +2,7 @@ package view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -19,6 +20,7 @@ import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 import model.Book
+import model.BookRoomDatabase
 import viewmodel.BookViewModel
 import java.text.DateFormat
 import java.time.LocalTime
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, NewBookActivity::class.java)
-        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
+//        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
         intent.putExtra(EXTRA_KEY_BOOK_NAME, mAdapter.getBooks()[position].name)
         intent.putExtra(EXTRA_KEY_GENERO, mAdapter.getBooks()[position].genero)
         intent.putExtra(EXTRA_KEY_AUTOR, mAdapter.getBooks()[position].autor)
@@ -41,8 +43,8 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
     private lateinit var mAdapter: BookListAdapter
     private var mBooks: List<Book> = mutableListOf<Book>()
     private lateinit var mBookViewModel: BookViewModel
-    private lateinit var mNumber: BookViewModel
-    private lateinit var mNumberRegisters: TextView
+//    private lateinit var mNumber: BookViewModel
+//    private lateinit var mNumberRegisters: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +66,13 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
             }
         })
 
-        mNumberRegisters = findViewById(R.id.number_content)
-        mNumber = ViewModelProviders.of(this).get(BookViewModel::class.java)
-        mNumberRegisters.text = mNumber.getNumOfBooks().toString()
+//        mNumberRegisters = findViewById(R.id.number_content)
+//        var mNumber = Room.databaseBuilder(applicationContext, BookRoomDatabase :: class.java, "db_books").build()
+
+//        var a = mNumber.bookDao().getNumOfBooks()
+//        mNumber = ViewModelProviders.of(this).get(BookViewModel::class.java)
+//        mNumberRegisters.text = mNumber.getNumOfBooks().toString()
+//        mNumberRegisters.text = a.toString()
 
 
         fab.setOnClickListener {
@@ -80,7 +86,8 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
         if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_SAVE) {
             data?.let {
-                val book = Book( it.getStringExtra(EXTRA_KEY_ID).toInt(),
+                val book = Book(
+//                    it.getStringExtra(EXTRA_KEY_ID).toInt(),
                     it.getStringExtra(EXTRA_KEY_BOOK_NAME),
                     it.getStringExtra(EXTRA_KEY_GENERO),
                     it.getStringExtra(EXTRA_KEY_AUTOR),
@@ -90,7 +97,8 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
             }
         } else if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
             data?.let {
-                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID).toInt())
+                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
+//                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID).toInt())
                 book?.let {
                     mBookViewModel.deleteBook(book)
                 }
