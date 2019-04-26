@@ -20,6 +20,7 @@ class UpdateBookActivity : AppCompatActivity() {
     private lateinit var mSaveBtn: Button
     private lateinit var mDeleteBtn: Button
 
+    private lateinit var mId: String
     private lateinit var mBook: String
     private lateinit var mGenero: String
     private lateinit var mAutor: String
@@ -40,6 +41,7 @@ class UpdateBookActivity : AppCompatActivity() {
 
         val extras = intent.extras
         extras?.let {
+            mId = extras.get(EXTRA_KEY_ID) as String
             mBook = extras.get(EXTRA_KEY_BOOK_NAME) as String
             mGenero = extras.get(EXTRA_KEY_GENERO) as String
             mAutor = extras.get(EXTRA_KEY_AUTOR) as String
@@ -68,6 +70,7 @@ class UpdateBookActivity : AppCompatActivity() {
                 mPrecoEditText.setError(getString(R.string.obrigatorio_preco))
                 mPrecoEditText.requestFocus()
             } else {
+                intent.putExtra(EXTRA_KEY_ID, mId)
                 intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
                 intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
                 intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())

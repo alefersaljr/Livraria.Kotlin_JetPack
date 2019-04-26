@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, UpdateBookActivity::class.java)
-//        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
+        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
         intent.putExtra(EXTRA_KEY_BOOK_NAME, mAdapter.getBooks()[position].name)
         intent.putExtra(EXTRA_KEY_GENERO, mAdapter.getBooks()[position].genero)
         intent.putExtra(EXTRA_KEY_AUTOR, mAdapter.getBooks()[position].autor)
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
         if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_SAVE) {
             data?.let {
                 val book = Book(
-//                    it.getStringExtra(EXTRA_KEY_ID).toInt(),
+                    (it.getStringExtra(EXTRA_KEY_ID)),
                     it.getStringExtra(EXTRA_KEY_BOOK_NAME),
                     it.getStringExtra(EXTRA_KEY_GENERO),
                     it.getStringExtra(EXTRA_KEY_AUTOR),
@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
             }
         } else if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
             data?.let {
-                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
-//                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID).toInt())
+//                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
+                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID))
                 book?.let {
                     mBookViewModel.deleteBook(book)
                 }

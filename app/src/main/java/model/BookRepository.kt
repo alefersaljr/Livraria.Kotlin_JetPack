@@ -37,27 +37,27 @@ class BookRepository (application: Application) {
 //        return numberRegisters
 //    }
 
-    fun getBookById(name: String): Book? {
-        val allBookList = allBooks?.value?.toList()
-
-        allBookList?.iterator()?.forEach {
-            if (it.name == name){
-                return it
-            }
-        }
-        return null
-    }
-
-//    fun getBookById(id: Int): Book? {
+//    fun getBookById(name: String): Book? {
 //        val allBookList = allBooks?.value?.toList()
 //
 //        allBookList?.iterator()?.forEach {
-//            if (it.id == id){
+//            if (it.name == name){
 //                return it
 //            }
 //        }
 //        return null
 //    }
+
+    fun getBookById(id: String): Book? {
+        val allBookList = allBooks?.value?.toList()
+
+        allBookList?.iterator()?.forEach {
+            if (it.id == id){
+                return it
+            }
+        }
+        return null
+    }
 
     private class InsertAsyncTask(private val dao: BookDao) :AsyncTask<Book, Void, Void>() {
         override fun doInBackground(vararg params: Book): Void? {

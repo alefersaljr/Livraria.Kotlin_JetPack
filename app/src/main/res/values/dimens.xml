@@ -40,7 +40,7 @@
     <dimen name="margin_top_recycler_view">25dp</dimen>
     <dimen name="paddin_item_book">8sp</dimen>
     <dimen name="paddin_bottom_autor">5sp</dimen>
-    <dimen name="paddin_left_item_autor">20sp</dimen>
+    <dimen name="paddin_left_item_autor">10sp</dimen>
     <dimen name="paddin_left_total_layout">15sp</dimen>
     <dimen name="paddin_left_total_txt">5sp</dimen>
     <dimen name="paddin_top_recycler_view">12sp</dimen>

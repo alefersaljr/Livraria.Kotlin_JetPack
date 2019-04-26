@@ -17,11 +17,11 @@ interface BookDao {
     @Query("SELECT * FROM table_books ORDER BY name ASC")
     fun getAllBooks(): LiveData<List<Book>>
 
-    @Query("SELECT * FROM table_books WHERE name = :name")
-    fun getBookById(name: String): Book
+//    @Query("SELECT * FROM table_books WHERE name = :name")
+//    fun getBookById(name: String): Book
 
-//    @Query("SELECT * FROM table_books WHERE id = :id")
-//    fun getBookById(id: Int): Book
+    @Query("SELECT * FROM table_books WHERE id = :id")
+    fun getBookById(id: String): Book
 
     @Query("SELECT COUNT (*) FROM table_books")
     fun getNumOfBooks(): LiveData<Int>?
