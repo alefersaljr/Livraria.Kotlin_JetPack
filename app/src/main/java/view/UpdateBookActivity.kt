@@ -51,8 +51,6 @@ class UpdateBookActivity : AppCompatActivity() {
             mPrecoEditText.setText(mPreco)
         }
 
-        mDeleteBtn.visibility = View.VISIBLE
-
         mSaveBtn.setOnClickListener {
             val intent = Intent()
             if (TextUtils.isEmpty(mBookEditText.text)) {

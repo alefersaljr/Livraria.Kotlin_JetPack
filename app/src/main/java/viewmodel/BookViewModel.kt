@@ -32,8 +32,4 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
     fun getBookById(id: String): Book? {
         return bookRepository.getBookById(id)
     }
-
-//    fun getNumOfBooks(): LiveData<Int>? {
-//        return bookRepository.getNumOfBooks()
-//    }
 }
