@@ -18,8 +18,11 @@ import br.com.alexandre_salgueirinho.library_kotlin.R
 import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 import model.Book
 import viewmodel.BookViewModel
+import android.os.Handler
+
 
 class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
@@ -35,16 +38,19 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: BookListAdapter
-    private var mBooks: List<Book> = mutableListOf<Book>()
+    private var mBooks: List<Book> = mutableListOf()
     private lateinit var mBookViewModel: BookViewModel
     private lateinit var mTempo: TextView
     private lateinit var mNumberRegisters: TextView
     lateinit var context: Context
 
+    val looperTime: Long = 5000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
 
         mTempo = findViewById(R.id.tempo_execucao_txt)
         mNumberRegisters = findViewById(R.id.total_txt)
@@ -58,16 +64,44 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
         mBookViewModel.getAllBooks().observe(this, Observer { books ->
             books?.let {
-                var tempoIni = System.currentTimeMillis()
+                var tempoIni = System.nanoTime()
 
                 mAdapter.setBooks(it)
                 mNumberRegisters.text = mAdapter.itemCount.toString()
 
-                var tempoFim = System.currentTimeMillis()
-                var tempoExecucao = (tempoFim - tempoIni).toString()
+                var tempoFim = System.nanoTime()
+                var tempoExecucao = String.format("%.3f", (tempoFim.toDouble() - tempoIni.toDouble()) / 1000000)
                 mTempo.text = tempoExecucao
             }
         })
+
+        teste()
+    }
+
+    private fun teste() {
+        val ha = Handler()
+        ha.postDelayed(object : Runnable {
+
+            override fun run() {
+                atualiza()
+                ha.postDelayed(this, looperTime)
+            }
+        }, looperTime)
+    }
+
+    private fun atualiza() {
+        var tempoI = System.nanoTime()
+        mBookViewModel.getAllBooks().observe(this, Observer { books ->
+            books?.let {
+            }
+        })
+
+        var tempoF = System.nanoTime()
+        var tempoExecucao = String.format("%.3f", (tempoF.toDouble() - tempoI.toDouble()) / 1000000)
+
+        runOnUiThread {
+            mTempo.text = tempoExecucao
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -135,102 +169,4 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
         val dialog = builder.create()
         dialog.show()
     }
-
-//    suspend fun consultaRegistros() {
-//        mBookViewModel.getAllBooks().observe(this, Observer { books ->
-//            books?.let {
-//                mAdapter.setBooks(it)
-//                mNumberRegisters.text = mAdapter.itemCount.toString()
-//            }
-//        })
-//    }
-//
-//    fun asyncConsultaRegistros () = async (CommonPool) {
-//
-//    }
-//
-//    fun consulta() {
-//        doAsync {
-//            var i = 0
-//            while (i < Int.MAX_VALUE) {
-//                var tempoIni = System.currentTimeMillis()
-//                mBookViewModel.getAllBooks().observe(this@MainActivity, Observer { books ->
-//                    books?.let {
-//                        mAdapter.setBooks(it)
-//                        mNumberRegisters.text = mAdapter.itemCount.toString()
-//                    }
-//                })
-//                var tempoFim = System.currentTimeMillis()
-//                var tempoExecucao = (tempoFim - tempoIni).toString()
-//                uiThread {
-//                    mTempo.text = tempoExecucao
-//                    Thread.sleep(5000)
-//                }
-//                i++
-//            }
-//        }
-//    }
-//
-//    fun consultaAssincrona() = runBlocking {
-//        var i = 0
-//        do {
-//            var tempoIni = System.currentTimeMillis()
-//            async { consulta() }
-//
-//            var tempoFim = System.currentTimeMillis()
-//            var tempoExecucao = String.format("%.2f", (tempoFim.toDouble() - tempoIni.toDouble()))
-//            mTempo.text = tempoExecucao
-//
-//            i++
-//        } while (i < Int.MAX_VALUE)
-//    }
-//
-//    fun consultaAssincrona2() = runBlocking {
-//        val custonDispatcher = Executors.newFixedThreadPool(2).asCoroutineDispatcher()
-//
-//        launch(custonDispatcher) {
-//            var i = 0
-//            do {
-//                var tempoIni = System.currentTimeMillis()
-//
-//                async { consulta() }
-//
-//                var tempoFim = System.currentTimeMillis()
-//                var tempoExecucao = String.format("%.2f", (tempoFim.toDouble() - tempoIni.toDouble()))
-//                mTempo.text = tempoExecucao
-//
-//                i++
-//            } while (i < Int.MAX_VALUE)
-//        }
-//    }
-//
-//    internal inner class getConsulta : AsyncTask<Void, Void, Long?>() {
-//        var tempoInicial: Long = 0
-//        var tempoFinal: Long = 0
-//        var tempoExecusao: Long = 0
-//
-//        override fun onPreExecute() {
-//            super.onPreExecute()
-//            tempoInicial = System.currentTimeMillis()
-//        }
-//
-//        override fun doInBackground(vararg p0: Void?): Long? {
-//
-//            this@MainActivity.runOnUiThread(java.lang.Runnable {
-//                mBookViewModel.getAllBooks().observe(this@MainActivity, Observer { books ->
-//                    books?.let {
-//                        mAdapter.setBooks(it)
-//                    }
-//                })
-//            })
-//            return null
-//        }
-//
-//        override fun onPostExecute(result: Long?) {
-//            super.onPostExecute(result)
-//            tempoFinal = System.currentTimeMillis()
-//            tempoExecusao = tempoFinal - tempoInicial
-//            mTempo.text = tempoExecusao.toString()
-//        }
-//    }
 }
