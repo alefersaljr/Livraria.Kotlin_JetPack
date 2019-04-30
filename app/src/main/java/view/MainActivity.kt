@@ -23,18 +23,9 @@ import model.Book
 import viewmodel.BookViewModel
 import android.os.Handler
 
-
 class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
-    override fun onItemClick(view: View, position: Int) {
-        val intent = Intent(this, UpdateBookActivity::class.java)
-        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
-        intent.putExtra(EXTRA_KEY_BOOK_NAME, mAdapter.getBooks()[position].name)
-        intent.putExtra(EXTRA_KEY_GENERO, mAdapter.getBooks()[position].genero)
-        intent.putExtra(EXTRA_KEY_AUTOR, mAdapter.getBooks()[position].autor)
-        intent.putExtra(EXTRA_KEY_PRECO, mAdapter.getBooks()[position].preco)
-        startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE)
-    }
+    val looperTime: Long = 5000
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: BookListAdapter
@@ -44,13 +35,10 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
     private lateinit var mNumberRegisters: TextView
     lateinit var context: Context
 
-    val looperTime: Long = 5000
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
 
         mTempo = findViewById(R.id.tempo_execucao_txt)
         mNumberRegisters = findViewById(R.id.total_txt)
@@ -75,21 +63,21 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
             }
         })
 
-        teste()
+        chamadaAssincrona()
     }
 
-    private fun teste() {
-        val ha = Handler()
-        ha.postDelayed(object : Runnable {
+    private fun chamadaAssincrona() {
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
 
             override fun run() {
-                atualiza()
-                ha.postDelayed(this, looperTime)
+                chamada()
+                handler.postDelayed(this, looperTime)
             }
         }, looperTime)
     }
 
-    private fun atualiza() {
+    private fun chamada() {
         var tempoI = System.nanoTime()
         mBookViewModel.getAllBooks().observe(this, Observer { books ->
             books?.let {
@@ -102,6 +90,16 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
         runOnUiThread {
             mTempo.text = tempoExecucao
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val intent = Intent(this, UpdateBookActivity::class.java)
+        intent.putExtra(EXTRA_KEY_ID, mAdapter.getBooks()[position].id)
+        intent.putExtra(EXTRA_KEY_BOOK_NAME, mAdapter.getBooks()[position].name)
+        intent.putExtra(EXTRA_KEY_GENERO, mAdapter.getBooks()[position].genero)
+        intent.putExtra(EXTRA_KEY_AUTOR, mAdapter.getBooks()[position].autor)
+        intent.putExtra(EXTRA_KEY_PRECO, mAdapter.getBooks()[position].preco)
+        startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
