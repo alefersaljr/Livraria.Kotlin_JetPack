@@ -4,14 +4,14 @@
       tools:context="br.com.alexandre_salgueirinho.library_kotlin.view.MainActivity">
 
     <item android:id="@+id/action_add_book"
-          android:title="Adicionar Livro"
+          android:title="@string/adicionar_livro"
           android:orderInCategory="100"
-          app:showAsAction="always"
+          app:showAsAction="ifRoom"
           android:icon="@drawable/icon_add_circle"/>
 
     <item android:id="@+id/action_clear_list"
           android:title="@string/action_clear_list"
           android:orderInCategory="100"
-          app:showAsAction="always"
+          app:showAsAction="ifRoom"
           android:icon="@drawable/icon_close"/>
 </menu>

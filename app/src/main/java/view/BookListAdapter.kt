@@ -10,13 +10,14 @@ import android.widget.TextView
 import br.com.alexandre_salgueirinho.library_kotlin.R
 import model.Book
 
-class BookListAdapter(private val mContext: Context, private var mItemClickListener: ItemClickListener) : RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
+class BookListAdapter(private val mContext: Context, private var mItemClickListener: ItemClickListener) :
+    RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
 
     private lateinit var mBooks: List<Book>
 
     fun getBooks() = mBooks
 
-    fun setBooks(books: List<Book>){
+    fun setBooks(books: List<Book>) {
         mBooks = books
         notifyDataSetChanged()
     }
@@ -43,7 +44,7 @@ class BookListAdapter(private val mContext: Context, private var mItemClickListe
         holder.bookAutorTextView.text = autor_label
 
         var preco_label = "Preço: " + currentBook.preco
-        if(currentBook.preco == "0" || currentBook.preco == "0.0") preco_label = "Grátis"
+        if (currentBook.preco == "0" || currentBook.preco == "0.0") preco_label = "Grátis"
         holder.bookPrecoTextView.text = preco_label
 
         holder.bookItemTextView.setOnClickListener {
@@ -51,7 +52,7 @@ class BookListAdapter(private val mContext: Context, private var mItemClickListe
         }
     }
 
-    class BookViewHolder (itemView: View): RecyclerView.ViewHolder (itemView){
+    class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var bookItemTextView: LinearLayout = itemView.findViewById(R.id.book_item)
         var bookTextView: TextView = itemView.findViewById(R.id.textView)
         var bookGeneroTextView: TextView = itemView.findViewById(R.id.textViewGenero)
