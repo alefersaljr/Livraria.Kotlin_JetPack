@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Livraria (Kotlin + JetPack)</string>
     <string name="action_clear_list">Excluir Todos Os Livros</string>
-    <string name="adicionar_livro">Adicionar Livro</string>
     <string name="autor_hint">Autor..</string>
     <string name="autor_label">Autor</string>
     <string name="book_deleted_label">Livro Excluído</string>
@@ -13,7 +12,6 @@
     <string name="dialog_nao">NÃO</string>
     <string name="dialog_sim">SIM</string>
     <string name="empty_book_not_saved">Livro vazio, não salvo</string>
-    <string name="exclude_book">Tem certeza que deseja excluir este livro?</string>
     <string name="genero_hint">Genero..</string>
     <string name="genero_label">Genero</string>
     <string name="livro_numero_label">Livro Número:</string>
@@ -26,4 +24,5 @@
     <string name="toast_livros_excluidos">Livros excluidos</string>
     <string name="total_label">Total de Livros:</string>
     <string name="total_txt">0</string>
+    <string name="exclude_book">Tem certeza que deseja excluir este livro?</string>
 </resources>

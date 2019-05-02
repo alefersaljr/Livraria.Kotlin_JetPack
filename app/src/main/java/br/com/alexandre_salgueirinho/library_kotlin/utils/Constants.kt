@@ -9,3 +9,4 @@ const val RESULT_SAVE = 0
 const val RESULT_ERROR = 1
 const val NEW_BOOK_ACTIVITY_REQUEST_CODE = 1
 const val RESULT_DELETE = 2
+const val EXTRA_TIME_EXECUTION = "0"

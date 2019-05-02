@@ -5,11 +5,11 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [Book::class], version = 1)
+@Database (entities = [Book::class], version = 1)
 abstract class BookRoomDatabase : RoomDatabase() {
-    abstract fun bookDao(): BookDao
+    abstract fun bookDao () : BookDao
 
-    companion object {
+    companion object{
         @Volatile
         var dbInstance: BookRoomDatabase? = null
 
@@ -17,12 +17,11 @@ abstract class BookRoomDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): BookRoomDatabase {
             val tempInstance = dbInstance
-            if (tempInstance != null) {
+            if(tempInstance != null){
                 return tempInstance
             }
-            synchronized(this) {
-                val instance =
-                    Room.databaseBuilder(context.applicationContext, BookRoomDatabase::class.java, dbName).build()
+            synchronized(this){
+                val instance = Room.databaseBuilder(context.applicationContext, BookRoomDatabase::class.java, dbName).build()
                 dbInstance = instance
                 return instance
             }

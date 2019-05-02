@@ -6,8 +6,8 @@ import android.arch.lifecycle.LiveData
 import model.Book
 import model.BookRepository
 
-class BookViewModel(application: Application) : AndroidViewModel(application) {
-    private val bookRepository: BookRepository
+class BookViewModel(application: Application): AndroidViewModel(application) {
+    private val bookRepository:BookRepository
     private val allBooks: LiveData<List<Book>>
 
     init {
@@ -15,15 +15,15 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         allBooks = bookRepository.getAllBooks()
     }
 
-    fun insertBook(book: Book) {
+    fun insertBook(book: Book){
         bookRepository.insertBook(book)
     }
 
-    fun deleteBook(book: Book) {
+    fun deleteBook(book: Book){
         bookRepository.deleteBook(book)
     }
 
-    fun delereAllBooks() {
+    fun delereAllBooks(){
         bookRepository.delereAllBooks()
     }
 

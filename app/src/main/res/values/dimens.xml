@@ -6,7 +6,6 @@
     <dimen name="margin_bottom_btn_save">40dp</dimen>
     <dimen name="margin_end_btn_save">40dp</dimen>
     <dimen name="margin_end_btn_delete">80dp</dimen>
-    <dimen name="margin_item_autor">5sp</dimen>
     <dimen name="margin_item_listner">5sp</dimen>
     <dimen name="margin_left_autor_label">20dp</dimen>
     <dimen name="margin_left_autor_txt">40dp</dimen>
@@ -51,4 +50,5 @@
     <dimen name="txt_size_total_label">15sp</dimen>
     <dimen name="txt_size_total_txt">15sp</dimen>
     <dimen name="width_icon_add">24dp</dimen>
+    <dimen name="margin_item_autor">5sp</dimen>
 </resources>

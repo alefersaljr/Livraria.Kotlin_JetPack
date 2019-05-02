@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import br.com.alexandre_salgueirinho.library_kotlin.R
 import br.com.alexandre_salgueirinho.library_kotlin.utils.*
 import java.text.SimpleDateFormat
@@ -71,18 +70,15 @@ class NewBookActivity : AppCompatActivity() {
             } else if (TextUtils.isEmpty(mPrecoEditText.text)) {
                 mPrecoEditText.setError(getString(R.string.obrigatorio_preco))
                 mPrecoEditText.requestFocus()
-            } else {
-                try {
-                    intent.putExtra(EXTRA_KEY_ID, date)
-                    intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
-                    intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
-                    intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())
-                    intent.putExtra(EXTRA_KEY_PRECO, mPrecoEditText.text.toString())
-                    setResult(RESULT_SAVE, intent)
-                    finish()
-                } catch (ex: Exception) {
-                    Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
-                }
+            }
+            else {
+                intent.putExtra(EXTRA_KEY_ID, date)
+                intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_PRECO, mPrecoEditText.text.toString())
+                setResult(RESULT_SAVE, intent)
+                finish()
             }
         }
     }
