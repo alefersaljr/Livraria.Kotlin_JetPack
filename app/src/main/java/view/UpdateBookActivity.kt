@@ -8,8 +8,10 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import br.com.alexandre_salgueirinho.library_kotlin.R
 import br.com.alexandre_salgueirinho.library_kotlin.utils.*
+import java.lang.Exception
 
 class UpdateBookActivity : AppCompatActivity() {
 
@@ -36,7 +38,6 @@ class UpdateBookActivity : AppCompatActivity() {
         mPrecoEditText = findViewById(R.id.preco_text_updt)
         mSaveBtn = findViewById(R.id.btn_save_updt)
         mDeleteBtn = findViewById(R.id.btn_delete_updt)
-
 
         val extras = intent.extras
         extras?.let {
@@ -66,13 +67,17 @@ class UpdateBookActivity : AppCompatActivity() {
                 mPrecoEditText.setError(getString(R.string.obrigatorio_preco))
                 mPrecoEditText.requestFocus()
             } else {
-                intent.putExtra(EXTRA_KEY_ID, mId)
-                intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
-                intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
-                intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())
-                intent.putExtra(EXTRA_KEY_PRECO, mPrecoEditText.text.toString())
-                setResult(RESULT_SAVE, intent)
-                finish()
+                try {
+                    intent.putExtra(EXTRA_KEY_ID, mId)
+                    intent.putExtra(EXTRA_KEY_BOOK_NAME, mBookEditText.text.toString())
+                    intent.putExtra(EXTRA_KEY_GENERO, mGeneroEditText.text.toString())
+                    intent.putExtra(EXTRA_KEY_AUTOR, mAutorEditText.text.toString())
+                    intent.putExtra(EXTRA_KEY_PRECO, mPrecoEditText.text.toString())
+                    setResult(RESULT_SAVE, intent)
+                    finish()
+                } catch (ex: Exception) {
+                    Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -81,10 +86,14 @@ class UpdateBookActivity : AppCompatActivity() {
             builder.setTitle(getString(R.string.app_name))
             builder.setMessage(getString(R.string.exclude_book))
 
-            builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
-                intent.putExtra(EXTRA_KEY_BOOK_NAME, mId)
-                setResult(RESULT_DELETE, intent)
-                finish()
+            try {
+                builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
+                    intent.putExtra(EXTRA_KEY_BOOK_NAME, mId)
+                    setResult(RESULT_DELETE, intent)
+                    finish()
+                }
+            } catch (ex: Exception) {
+                Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
             }
 
             builder.setNegativeButton(getString(R.string.dialog_nao)) { dialog, _ ->

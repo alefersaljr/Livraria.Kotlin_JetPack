@@ -50,18 +50,22 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
 
         mBookViewModel = ViewModelProviders.of(this).get(BookViewModel::class.java)
 
-        mBookViewModel.getAllBooks().observe(this, Observer { books ->
-            books?.let {
-                var tempoIni = System.nanoTime()
+        try {
+            mBookViewModel.getAllBooks().observe(this, Observer { books ->
+                books?.let {
+                    val tempoIni = System.nanoTime()
 
-                mAdapter.setBooks(it)
-                mNumberRegisters.text = mAdapter.itemCount.toString()
+                    mAdapter.setBooks(it)
+                    mNumberRegisters.text = mAdapter.itemCount.toString()
 
-                var tempoFim = System.nanoTime()
-                var tempoExecucao = String.format("%.3f", (tempoFim.toDouble() - tempoIni.toDouble()) / 1000000)
-                mTempo.text = tempoExecucao
-            }
-        })
+                    val tempoFim = System.nanoTime()
+                    val tempoExecucao = String.format("%.3f", (tempoFim.toDouble() - tempoIni.toDouble()) / 1000000)
+                    mTempo.text = tempoExecucao
+                }
+            })
+        } catch (ex: Exception) {
+            Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
+        }
 
         chamadaAssincrona()
     }
@@ -78,14 +82,14 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
     }
 
     private fun chamada() {
-        var tempoI = System.nanoTime()
+        val tempoI = System.nanoTime()
         mBookViewModel.getAllBooks().observe(this, Observer { books ->
             books?.let {
             }
         })
 
-        var tempoF = System.nanoTime()
-        var tempoExecucao = String.format("%.3f", (tempoF.toDouble() - tempoI.toDouble()) / 1000000)
+        val tempoF = System.nanoTime()
+        val tempoExecucao = String.format("%.3f", (tempoF.toDouble() - tempoI.toDouble()) / 1000000)
 
         runOnUiThread {
             mTempo.text = tempoExecucao
@@ -114,14 +118,21 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
                     it.getStringExtra(EXTRA_KEY_AUTOR),
                     it.getStringExtra(EXTRA_KEY_PRECO)
                 )
-                mBookViewModel.insertBook(book)
+                try {
+                    mBookViewModel.insertBook(book)
+                } catch (ex: Exception) {
+                    Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
+                }
             }
         } else if (requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
             data?.let {
-                //                val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_BOOK_NAME))
                 val book = mBookViewModel.getBookById(it.getStringExtra(EXTRA_KEY_ID))
                 book?.let {
-                    mBookViewModel.deleteBook(book)
+                    try {
+                        mBookViewModel.deleteBook(book)
+                    } catch (ex: Exception) {
+                        Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 Toast.makeText(this, getString(R.string.book_deleted_label), Toast.LENGTH_SHORT).show()
             }
@@ -155,9 +166,13 @@ class MainActivity : AppCompatActivity(), BookListAdapter.ItemClickListener {
         builder.setTitle(getString(R.string.app_name))
         builder.setMessage(getString(R.string.confirmacao_excluir_lista))
 
-        builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
-            mBookViewModel.delereAllBooks()
-            Toast.makeText(this, getString(R.string.toast_livros_excluidos), Toast.LENGTH_SHORT).show()
+        try {
+            builder.setPositiveButton(getString(R.string.dialog_sim)) { _, _ ->
+                mBookViewModel.delereAllBooks()
+                Toast.makeText(this, getString(R.string.toast_livros_excluidos), Toast.LENGTH_SHORT).show()
+            }
+        } catch (ex: Exception) {
+            Toast.makeText(applicationContext, ex.message, Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton(getString(R.string.dialog_nao)) { dialog, _ ->
